@@ -1,33 +1,69 @@
 const express=require("express");
 const app=express();
+const {Router}=require("express");
+const jwt=require("jsonwebtoken")
+const{JWT_ADMIN_PASSWORD}=require("../config")
+const { adminModel } = require("../db");
+const adminRouter=Router()
+const{adminMiddleware}=require("../middleware/admin")
 
 //route for admin signup
-app.post("/admin/signup",function(req,res){
+adminRouter.post("/signup",async function(res,req){
+    const{email,password,firstName,lastName}=req.body
 
+    await adminModel.create({
+        email,
+        password,
+        firstName,
+        lastName
+    })
+
+    res.json({
+        message:"singup successfully"
+    })
 })
 
 //route for admin signin
-app.post("/admin/signin",function(req,res){
-    
+adminRouter.post("/signin",async function(req,res){
+    const {email,password}=req.body;
+    const user=await adminModel.findOne({
+        email:email,
+        password:password
+    });
+    if(user){
+        const token= jwt.sign({
+            id:user._id
+           },JWT_ADMIN_PASSWORD);
+           res.json({
+            token:token
+           })
+        }else{
+            res.status(403).json({
+                message:"Incorrect Credentials"
+             })
+        }
 })
 
 //route to add a book by admin
-app.post("/admin/book",function(req,res){
+adminRouter.post("/book",adminMiddleware,function(req,res){
     
 })
 
 //route to delete a book by admin
-app.delete("/admin/book",function(req,res){
+adminRouter.delete("/book",adminMiddleware,function(req,res){
     
 })
 
 //route to update a book by admin
-app.put("/admin/book",function(req,res){
+adminRouter.put("/book",adminMiddleware,function(req,res){
     
 })
 
 //route to see all his books
-app.get("/admin/book",function(req,res){
+adminRouter.get("/book",adminMiddleware,function(req,res){
     
 })
-app.listen(3001);
+
+module.exports={
+    adminRouter:adminRouter
+}

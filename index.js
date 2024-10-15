@@ -2,7 +2,7 @@ const express=require("express");
 const app=express();
 const mongoose=require("mongoose")
 const{userRouter}=require("./routes/user");
-const{bookRouter}=require("./routes/book");
+const{bookRouter}=require("./routes/books");
 const{adminRouter}=require("./routes/admin");
 
 app.use(express.json());

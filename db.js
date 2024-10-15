@@ -32,10 +32,10 @@ const purchaseSchema=new Schema({
     userId:ObjectId
 })
 
-const userModel=mongoose.Model("user",userSchema)
-const bookModel=mongoose.Model("book",bookSchema)
-const adminModel=mongoose.Model("admin",adminSchema)
-const purchaseModel=mongoose.Model("purchase",purchaseSchema)
+const userModel=mongoose.model("user",userSchema)
+const bookModel=mongoose.model("book",bookSchema)
+const adminModel=mongoose.model("admin",adminSchema)
+const purchaseModel=mongoose.model("purchase",purchaseSchema)
 
 module.exports={
     userModel,

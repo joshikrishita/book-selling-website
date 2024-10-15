@@ -1,14 +1,18 @@
 const express=require("express")
 const app=express()
+const {Router}=require("express")
+const bookRouter=Router()
 
 //route to see all available books
-app.get("/books/preview",function(req,res){
+bookRouter.get("/books/preview",function(req,res){
 
 })
 
 //route to purchase books
-app.post("/books/purchase",function(req,res){
+bookRouter.post("/books/purchase",function(req,res){
 
 })
 
-app.listen(3001);
+module.exports={
+    bookRouter:bookRouter
+}
